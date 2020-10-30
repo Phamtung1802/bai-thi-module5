@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col col-6 left-align">
+      Có {{bookList.length}} cuốn sách
+  </div>
+  <div class="col col-6 right-align">
+    <button type="button" class="btn btn-primary float-right p-r-2 p-b-2" data-toggle="modal" data-target="#addBook">
+      Thêm cuốn sách mới
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addBook" tabindex="-1" role="dialog" aria-labelledby="addBook" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Thêm Sách Mới</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+            <form action="#">
+              <div class="modal-body">
+                <form [formGroup]="addForm" (ngSubmit)="addBook()">
+                  <div class="form-group">
+                    <label for="name">Tên Sách</label>
+                    <input formControlName="title" type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Nhập Tên Sách...">
+                  </div>
+                  <div class="form-group">
+                    <label for="author">Tác giả</label>
+                    <input formControlName="author" type="text" class="form-control" id="author" placeholder="Nhập tên tác giả ....">
+                  </div>
+                  <div class="form-group">
+                    <label for="des">Mô tả</label>
+                    <textarea formControlName="description" type="text" class="form-control" id="des" placeholder="Nhập mô tả ...."></textarea>
+                  </div>
+                  <input type="submit" class="btn btn-primary" value="Submit">
+                </form>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+<div class="row">
+  <div class="col col-12 px-2 py-2">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Tên Sách</th>
+          <th scope="col">Tác Giả</th>
+          <th scope="col">Chỉnh Sửa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of bookList">
+          <th scope="row">{{item.id}}</th>
+          <td><a class="text-dark" [routerLink]='["details",item.id]'>{{item.title}}</a></td>
+          <td>{{item.author}}</td>
+          <td>
+            <button class="btn btn-primary mx-1" data-toggle="modal" data-target="#editBook">Edit</button>
+
+            <div class="modal fade" id="editBook" tabindex="-1" role="dialog" aria-labelledby="editBook" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Thêm Sách Mới</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                    <form action="#">
+                      <div class="modal-body">
+                        <form [formGroup]="editForm" (ngSubmit)="updateBook(item.id)">
+                          <div class="form-group">
+                            <label for="name">Tên Sách</label>
+                            <input formControlName="title" type="text" class="form-control" id="name" aria-describedby="emailHelp" [placeholder]="item.title">
+                          </div>
+                          <div class="form-group">
+                            <label for="author">Tác giả</label>
+                            <input formControlName="author" type="text" class="form-control" id="author" [placeholder]="item.author">
+                          </div>
+                          <div class="form-group">
+                            <label for="des">Mô tả</label>
+                            <textarea formControlName="description" type="text" class="form-control" id="des" [placeholder]="[item.description]"></textarea>
+                          </div>
+                          <input type="submit" class="btn btn-primary" value="Submit">
+                        </form>
+                      </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+
+
+
+            <button class="btn btn-primary mx-1" (click)='deleteBook(item.id)'>Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
